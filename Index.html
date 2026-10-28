@@ -1,0 +1,247 @@
+
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Buster - The Real Money Door</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .app-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        h2 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .tagline {
+            color: #555555;
+            font-size: 15px;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-left: 4px solid #28a745;
+            border-radius: 4px;
+            text-align: left;
+        }
+        p {
+            color: #666666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        input[type="password"], input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .btn-blue {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-green {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+      search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .burglar-sprite {
+            position: absolute;
+            left: -80px;
+            top: 0;
+            font-size: 40px;
+            display: none;
+            z-index: 10;
+        }
+        @keyframes snatchRun {
+            0% { left: -80px; }
+            45% { left: 45%; top: 0; }
+            50% { left: 45%; top: -6px; } 
+            55% { left: 45%; top: 0; }
+            100% { left: 110%; }
+        }
+        .flashing-dollars {
+            font-size: 50px;
+            font-weight: bold;
+            color: #28a745;
+            display: none;
+            margin-bottom: 15px;
+        }
+        @keyframes flashGreen {
+            0%, 100% { opacity: 1; text-shadow: 0 0 12px #28a745; }
+            50% { opacity: 0.2; }
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            box-sizing: border-box;
+        }
+        .scam-alert { background-color: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        .legit-alert { background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .vent-room {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #ccc;
+            text-align: left;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container" id="loginGate">
+    <h2>Scam Buster Security</h2>
+    <p>Please enter your $10 access password below to unlock the look-up tool.</p>
+    <input type="password" id="passwordField" placeholder="Enter Access Password">
+    <button class="btn-blue" onclick="checkPassword()">Unlock Tool</button>
+</div>
+<div class="app-container" id="searchApp" style="display: none;">
+    <h2>Scam Buster Lookup</h2>
+    <div class="tagline">
+        "Being poor is tough, but the poor just got tougher. Here's a wide open door to the real money paying games. My door will grant you some peace, some fun, and all with money in your pocket... for real. No scams about it."
+    </div>
+    <p>Type the name of any mobile game or video app below to verify it:</p>
+    <div class="search-wrapper">
+        <input type="text" id="gameInput" placeholder="Enter game or app name...">
+        <div id="burglar" class="burglar-sprite">🎭🏃‍♂️🛍️</div>
+    </div>
+
+  class="btn-green" id="checkBtn" onclick="startCheck()">Check Game</button>
+    <div id="dollarFlash" class="flashing-dollars">$ $ $</div>
+    <div id="resultBox" class="result-box">
+        <div id="resultTitle" style="font-size: 20px; font-weight: bold; margin-bottom: 8px;"></div>
+        <p id="resultText"></p>
+        <div id="affiliateContainer"></div>
+    </div>
+    <div id="ventRoomSection" class="vent-room">
+        <h3 style="color: #721c24; margin-top: 0;">🤬 The Private Vent Room</h3>
+        <p style="font-size: 13px; color: #555;">Did this game rip you off too? Get it off your chest and vent your frustration below. Your story helps us lock them in our data forever!</p>
+        <textarea id="ventText" rows="3" placeholder="Type how they scammed you (fake lines, level traps, stolen Cash App fees)..."></textarea>
+        <button class="btn-blue" style="background-color: #6c757d;" onclick="submitVent()">Submit My Vent</button>
+    </div>
+</div>
+<script>
+    function checkPassword() {
+        var password = document.getElementById("passwordField").value;
+        if (password === "scambuster2026") {
+            document.getElementById("loginGate").style.display = "none";
+            document.getElementById("searchApp").style.display = "block";
+        } else {
+            alert("Incorrect password. Please check your Gumroad receipt.");
+        }
+    }
+    function startCheck() {
+        var gameName = document.getElementById("gameInput").value.trim().toLowerCase();
+        if (gameName === "") { alert("Please type a name first."); return; }
+        var burglar = document.getElementById("burglar");
+        var gameInput = document.getElementById("gameInput");
+        var resultBox = document.getElementById("resultBox");
+        var dollarFlash = document.getElementById("dollarFlash");
+        var ventRoom = document.getElementById("ventRoomSection");
+        resultBox.style.display = "none";
+        dollarFlash.style.display = "none";
+        dollarFlash.style.animation = "none";
+        ventRoom.style.display = "none";
+        if (gameName.includes("1788") || gameName.includes("cash") || gameName.includes("win") || gameName.includes("slots") || gameName.includes("drama") || gameName.includes("shorts")) {
+            burglar.style.display = "block";
+            burglar.style.animation = "snatchRun 2.5s ease-in-out forwards";
+            setTimeout(function() {
+                gameInput.value = ""; 
+                gameInput.placeholder = "💥 GAME NAME SNATCHED BY BURGLAR!";
+            }, 1250);
+            setTimeout(function() {
+                burglar.style.display = "none";
+                gameInput.placeholder = "Enter game or app name...";
+                showFinalResult("scam");
+            }, 2500);
+        } 
+        else if (gameName.includes("mistplay") || gameName.includes("swagbucks") || gameName.includes("inboxdollars")) {
+            dollarFlash.style.display = "block";
+            dollarFlash.style.animation = "flashGreen 0.4s infinite alternate";
+            setTimeout(function() {
+                dollarFlash.style.display = "none";
+                showFinalResult("legit");
+            }, 2000);
+        } 
+        else {
+            showFinalResult("unknown");
+        }
+    }
+    function showFinalResult(status) {
+        var resultBox = document.getElementById("resultBox");
+        var resultTitle = document.getElementById("resultTitle");
+        var resultText = document.getElementById("resultText");
+        var affiliateContainer = document.getElementById("affiliateContainer");
+        var ventRoom = document.getElementById("ventRoomSection");
+        resultBox.style.display = "block";
+        affiliateContainer.innerHTML = "";
+        if (status === "scam") {
+            resultBox.className = "result-box scam-alert";
+            resultTitle.innerHTML = "🚨 RED LIGHT: VERIFIED TRAP!";
+            resultText.innerHTML = "WARNING: This app is a certified scam. They use fake 3,089 queues, halt your level progress, or charge fake upfront processing fees on Cash App. Do not waste your time!";
+            ventRoom.style.display = "block"; 
+        } else if (status === "legit") {
+            resultBox.className = "result-box legit-alert";
+            resultTitle.innerHTML = "💰 GREEN LIGHT: VERIFIED REWARDS!";
+            resultText.innerHTML = "Yes! This game is fully verified to show pay out for real! It is safe to use and has zero upfront hidden fees.";
+            affiliateContainer.innerHTML = '<a href="#" class="affiliate-btn" target="_blank">Open The Door: Download Safely Here</a>';
+        } else {
+            resultBox.className = "result-box scam-alert";
+            resultTitle.innerHTML = "⚠️ CAUTION: UNVERIFIED CODE";
+            resultText.innerHTML = "If this game promises huge upfront money (like $1,788) or makes you watch ads to skip waiting lines, it is a lie. Do not give them your cash info.";
+            ventRoom.style.display = "block";
+        }
+    }
+    function submitVent() {
+        var text = document.getElementById("ventText").value;
+        if (text.trim() === "") { alert("Please type your story before submitting."); return; }
+        alert("Vent Received! We are locking this game into our database to protect the next person. Thank you for making the poor tougher!");
+        document.getElementById("ventText").value = "";
+    }
+</script>
+</body>
+</html>
+        
